@@ -1,0 +1,57 @@
+(function(){
+
+    var serviceNamespace = abp.utils.createNamespace(abp, 'services.front.contactFrontEnd');
+
+    serviceNamespace.getContactAll = function(menuID, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/contactFrontEnd/GetContactAll' + abp.utils.buildQueryString([{ name: 'menuID', value: menuID }]) + '',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getContactenAll = function(menuID, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/contactFrontEnd/GetContactenAll' + abp.utils.buildQueryString([{ name: 'menuID', value: menuID }]) + '',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getContact = function(iD, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/contactFrontEnd/GetContact' + abp.utils.buildQueryString([{ name: 'iD', value: iD }]) + '',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getContacten = function(iD, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/contactFrontEnd/GetContacten' + abp.utils.buildQueryString([{ name: 'iD', value: iD }]) + '',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getContactemailByTitle = function(title, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/contactFrontEnd/GetContactemailByTitle' + abp.utils.buildQueryString([{ name: 'title', value: title }]) + '',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    if(typeof define === 'function' && define.amd){
+        define(function (require, exports, module) {
+            return {
+                'getContactAll' : serviceNamespace.getContactAll,
+                'getContactenAll' : serviceNamespace.getContactenAll,
+                'getContact' : serviceNamespace.getContact,
+                'getContacten' : serviceNamespace.getContacten,
+                'getContactemailByTitle' : serviceNamespace.getContactemailByTitle
+            };
+        });
+    }
+
+})();

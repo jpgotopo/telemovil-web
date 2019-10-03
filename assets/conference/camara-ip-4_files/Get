@@ -1,0 +1,138 @@
+(function(){
+
+    var serviceNamespace = abp.utils.createNamespace(abp, 'services.front.memberFrontEnd');
+
+    serviceNamespace.login = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/Login',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.verification = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/Verification',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.forget = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/Forget',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.resetPassword = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/ResetPassword',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.changePassword = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/ChangePassword',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.checkIsExistEmailOrUserName = function(emailOrUserName, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/CheckIsExistEmailOrUserName' + abp.utils.buildQueryString([{ name: 'emailOrUserName', value: emailOrUserName }]) + '',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getEamil = function(emailOrUsername, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/GetEamil' + abp.utils.buildQueryString([{ name: 'emailOrUsername', value: emailOrUsername }]) + '',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    serviceNamespace.logout = function(ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/Logout',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    serviceNamespace.registerMember = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/RegisterMember',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.updateMemberInfo = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/UpdateMemberInfo',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.changeEmail = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/ChangeEmail',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.changeUserName = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/ChangeUserName',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getMemberInfo = function(memberCacheItem, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/GetMemberInfo',
+            type: 'POST',
+            data: JSON.stringify(memberCacheItem)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getMemberCacheItem = function(ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/memberFrontEnd/GetMemberCacheItem',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    if(typeof define === 'function' && define.amd){
+        define(function (require, exports, module) {
+            return {
+                'login' : serviceNamespace.login,
+                'verification' : serviceNamespace.verification,
+                'forget' : serviceNamespace.forget,
+                'resetPassword' : serviceNamespace.resetPassword,
+                'changePassword' : serviceNamespace.changePassword,
+                'checkIsExistEmailOrUserName' : serviceNamespace.checkIsExistEmailOrUserName,
+                'getEamil' : serviceNamespace.getEamil,
+                'logout' : serviceNamespace.logout,
+                'registerMember' : serviceNamespace.registerMember,
+                'updateMemberInfo' : serviceNamespace.updateMemberInfo,
+                'changeEmail' : serviceNamespace.changeEmail,
+                'changeUserName' : serviceNamespace.changeUserName,
+                'getMemberInfo' : serviceNamespace.getMemberInfo,
+                'getMemberCacheItem' : serviceNamespace.getMemberCacheItem
+            };
+        });
+    }
+
+})();

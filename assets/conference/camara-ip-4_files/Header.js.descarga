@@ -1,0 +1,348 @@
+﻿$(function () {
+    getlanguage();
+    var loginName = abp.utils.getCookieValue("app.UserName");
+    if (loginName) {
+        loadLoginInfo(loginName);
+    }
+
+    checkCookieHint();
+
+    $(".cookie-close").click(function () {
+        closeCookieHint();
+    });
+});
+function getlanguage() {
+    var str = "";
+    abp.services.front.languageFrontEnd.getLanguages(
+        {
+            absolutePath: window.location.pathname
+        }
+        , {
+            async: true,
+            timeout: 30000,
+            abpHandleError: false
+        }).done(function (data) {
+            str += "<li class=\"nav1\">";
+            str += "<dl>";
+            str += "<dt>Global</dt>";
+            for (var i in data) {
+                if (data[i].region == "Global") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "<dl>";
+            str += "<dt>North America</dt>";
+            for (var i in data) {
+                if (data[i].region == "North America") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "<dl>";
+            str += "<dt>Oceania</dt>";
+            for (var i in data) {
+                if (data[i].region == "Oceania") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "</li>";
+            str += "<li class=\"nav2\">";
+            str += "<dl>";
+            str += "<dt>Asia Pacific</dt>";
+            for (var i in data) {
+                if (data[i].region == "Asia Pacific") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "</li>";
+            str += "<li class=\"nav3\">";
+            str += "<dl>";
+            str += "<dt>CIS</dt>";
+            for (var i in data) {
+                if (data[i].region == "CIS") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "<dl>";
+            str += "<dt>South America</dt>";
+            for (var i in data) {
+                if (data[i].region == "South America") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "</li>";
+            str += "<li class=\"nav4\">";
+            str += "<dl>";
+            str += "<dt>Europe</dt>";
+            for (var i in data) {
+                if (data[i].region == "Europe") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "</li>";
+            str += "<li class=\"nav5\">";
+            str += "<dl>";
+            str += "<dt>Middle East</dt>";
+            for (var i in data) {
+                if (data[i].region == "Middle East") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "</li>";
+            str += "<li class=\"nav6\">";
+            str += "<dl>";
+            str += "<dt>Africa</dt>";
+            for (var i in data) {
+                if (data[i].region == "Africa") {
+                    str += "<dd><a href='" + data[i].url + "'>" + data[i].displayName + "</a></dd>";
+                }
+            }
+            str += "</dl>";
+            str += "</li>";
+            str += "<img src=\"/Img/images/jiao-icon.jpg\" class=\"jiao\">";
+            str += "<div class=\"clear\"></div>";
+            $("#Languages1").html(str);
+        });
+}
+// 登录
+function login() {
+    if (fromValid()) {
+        $("#ErrorText2").hide();
+        abp.services.front.memberFrontEnd.login({
+            userName: $("input[name='UserName2']").val(),
+            password: $("input[name='Password2']").val(),
+            remember: $("#KeepLogin").prop("checked")
+        }, {
+                async: false,
+                timeout: 30000
+            }).done(function (data) {
+                submitFlag = false;
+                if (data == 0) {
+                    $("#ErrorText2").html(app.location.HKLoginIndexAttention2);
+                    $("#ErrorText2").show();
+                }
+                else if (data == 2) {
+                    $("#ErrorText2").html(app.location.HKLoginIndexprompt1);
+                    $("#ErrorText2").show();
+                }
+                else if (data == 1) {
+                    var loginName = abp.utils.getCookieValue("app.UserName");
+                    loadLoginInfo(loginName);
+                }
+                else if (data == 6) {
+                    window.location.href = app.location.ChangePasswordUrl;
+                }
+                else {
+                    $("#ErrorText2").html(app.location.HKLoginIndexprompt2);
+                    $("#ErrorText2").show();
+                }
+            });
+    }
+}
+// 退出登录
+function logout() {
+    abp.services.front.memberFrontEnd.logout({
+        async: false,
+        timeout: 30000
+    }).done(function (data) {
+        loadLoginInfo();
+    });
+}
+// 表单有效性
+function fromValid() {
+    if (!$("#UserName2").val() || !$("#Password2").val()) {
+        $("#ErrorText2").show();
+        $("#ErrorText2").html(app.location.UserNameOrPasswordError);
+        $("#UserName2").focus();
+        $("#UserName2").select();
+        return false;
+    } else {
+        $("#ErrorText2").hide();
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey(JSEncryptConsts.publicKey);
+        document.getElementById("Password2").value = encrypt.encrypt($("#Password2").val());
+    }
+    return true;
+}
+
+// 加载登录信息
+function loadLoginInfo(loginName) {
+    if (!loginName) {
+        $("#UserNameLable").html();
+        $("#denglu").html("Login");
+        $("#LoginAfter").hide();
+        $("#form2").show();
+        return;
+    }
+    $("#UserNameLable").html(loginName);
+    $("#denglu").html(app.location.LoggedIn);
+    $("#form2").hide();
+    $("#LoginAfter").show();
+}
+
+$(".search-btn").on("click", function () {
+    var url = app.location.SearchContentUrl;
+    var key = $(".search .text1").val();
+    if (key && key != app.location.Search) {
+        var value = key;
+        var express = "searchContent" + "=" + encodeURIComponent(value);
+        document.cookie = "" + express + ";path=/";
+        window.location.href = url + "#" + value;
+
+        if (window.location.hash && window.location.pathname == url) {
+            window.location.reload();
+        }
+    }
+    else {
+        alert(app.location.Otherkeyword);
+    }
+})
+$(".language-choose .language-list li").on('click', function () {
+
+    AddInfoToCookie("searchContent", null);
+    AddInfoToCookie("searchInfo", null);
+    AddInfoToCookie("CompareInfo", null);
+    AddInfoToCookie("comparaParamMolId", null);
+    AddInfoToCookie("compare_library", null);
+
+    localStorage.removeItem("CompareInfo");
+    localStorage.removeItem("comparaParamMolId");
+    localStorage.removeItem("compare_library");
+
+    function AddInfoToCookie(key, value) {
+        var express = key + "=" + escape(value);
+        document.cookie = "" + express + ";path=/";
+    }
+})
+
+function checkCookieHint() {
+    var tenancyName = abp.utils.getCookieValue("FrontEnd.TenancyName");
+    var hint = abp.utils.getCookieValue("HkHint");
+    if (hint == null || hint.indexOf('_' + tenancyName + '_') < 0) {
+        $(".cookie-box").slideDown();
+    }
+}
+function closeCookieHint() {
+    $(".cookie-box").slideUp();
+    var tenancyName = abp.utils.getCookieValue("FrontEnd.TenancyName");
+    var hint = abp.utils.getCookieValue("HkHint");
+    if (hint == null || hint.indexOf('_' + tenancyName + '_') < 0) {
+        abp.utils.setCookieValue(
+            "HkHint",
+            hint == null ? ('_' + tenancyName + '_') : (hint + tenancyName + '_'),
+            new Date(new Date().getTime() + 30 * 86400000),  //30天
+            "/",
+            null
+        );
+    }
+}
+//关闭弹出层
+$(".item-close").click(function () {
+    $(this).parents(".item").fadeOut(300);
+    $(this).parents(".item").addClass("on");
+    var zong = $(".pop-box.tips .tips-main .item").length;
+    var lens = $(".pop-box.tips .tips-main .item.on").length;
+
+    var dat = new Date();
+    var dateTime = dat.getFullYear() + '/' + (dat.getMonth() + 1) + '/' + (dat.getDate());
+
+    if ($(this).parents(".item").attr("id") == "show1") {
+        if ($("#showdoc1 i").hasClass("on")) {
+            var tenancyName = abp.utils.getCookieValue("FrontEnd.TenancyName");
+            var hint = abp.utils.getCookieValue("HkShow1");
+            if (hint == null || hint.indexOf('_' + tenancyName + '_') < 0) {
+                abp.utils.setCookieValue(
+                    "HkShow1",
+                    hint == null ? ('_' + tenancyName + '_') : (hint + tenancyName + '_'),
+                    new Date(new Date(dateTime).getTime() + 24 * 60 * 60 * 1000 - 1),  //当天23:59:59
+                    "/",
+                    null
+                );
+            }
+        }
+        else {
+            var tenancyName = abp.utils.getCookieValue("FrontEnd.TenancyName");
+            var hint = abp.utils.getCookieValue("HkShow1");
+            if (hint == null || hint.indexOf('_' + tenancyName + '_') < 0) {
+                abp.utils.setCookieValue(
+                    "HkShow1",
+                    hint == null ? ('_' + tenancyName + '_') : (hint + tenancyName + '_'),
+                    false,  //当天23:59:59
+                    "/",
+                    null
+                );
+            }
+        }
+    }
+    if ($(this).parents(".item").attr("id") == "show2") {
+        if ($("#showdoc2 i").hasClass("on")) {
+            var tenancyName = abp.utils.getCookieValue("FrontEnd.TenancyName");
+            var hint = abp.utils.getCookieValue("HkShow2");
+            if (hint == null || hint.indexOf('_' + tenancyName + '_') < 0) {
+                abp.utils.setCookieValue(
+                    "HkShow2",
+                    hint == null ? ('_' + tenancyName + '_') : (hint + tenancyName + '_'),
+                    new Date(new Date(dateTime).getTime() + 24 * 60 * 60 * 1000 - 1),  //30天//new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1),  //当天23:59:59
+                    "/",
+                    null
+                );
+            }
+        }
+        else {
+            var tenancyName = abp.utils.getCookieValue("FrontEnd.TenancyName");
+            var hint = abp.utils.getCookieValue("HkShow2");
+            if (hint == null || hint.indexOf('_' + tenancyName + '_') < 0) {
+                abp.utils.setCookieValue(
+                    "HkShow2",
+                    hint == null ? ('_' + tenancyName + '_') : (hint + tenancyName + '_'),
+                    false,  //当天23:59:59
+                    "/",
+                    null
+                );
+            }
+        }
+    }
+
+
+    if (lens == zong) {
+        $(".pop-box.tips").fadeOut(300);
+    }
+});
+
+//当日不再提醒选择
+$(".pop-box.tips .tips-main .item .doc i").click(function () {
+    if ($(this).hasClass("on")) {
+        $(this).removeClass("on");
+    } else {
+        $(this).addClass("on");
+    }
+});
+function checkCookieShow() {
+    var tenancyName = abp.utils.getCookieValue("FrontEnd.TenancyName");
+    var hint = abp.utils.getCookieValue("HkShow1");
+    var hint2 = abp.utils.getCookieValue("HkShow2");
+    if (hint == null || hint.indexOf('_' + tenancyName + '_') < 0) {
+        $("#showkorean").show();
+        $("#show1").removeClass("on");
+        $("#show1").show();
+    }
+    if (hint2 == null || hint2.indexOf('_' + tenancyName + '_') < 0) {
+        $("#showkorean").show();
+        $("#show2").removeClass("on");
+        $("#show2").show();
+    }
+
+    var zong = $(".pop-box.tips .tips-main .item").length;
+    var lens = $(".pop-box.tips .tips-main .item.on").length;
+    if (lens == zong) {
+        $(".pop-box.tips").fadeOut(300);
+    }
+}
+checkCookieShow();

@@ -1,0 +1,84 @@
+(function(){
+
+    var serviceNamespace = abp.utils.createNamespace(abp, 'services.front.feedbackFrontEnd');
+
+    serviceNamespace.onlineInquiry = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/feedbackFrontEnd/OnlineInquiry',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.onlineApplication = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/feedbackFrontEnd/OnlineApplication',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getFeedback = function(iD, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/feedbackFrontEnd/GetFeedback' + abp.utils.buildQueryString([{ name: 'iD', value: iD }]) + '',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    serviceNamespace.desvinculoHikConnect = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/feedbackFrontEnd/DesvinculoHikConnect',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.passwordReset = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/feedbackFrontEnd/PasswordReset',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getCertificationInfo = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/feedbackFrontEnd/GetCertificationInfo',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getCertificationImg = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/feedbackFrontEnd/GetCertificationImg',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.certificationEmail = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/feedbackFrontEnd/CertificationEmail',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    if(typeof define === 'function' && define.amd){
+        define(function (require, exports, module) {
+            return {
+                'onlineInquiry' : serviceNamespace.onlineInquiry,
+                'onlineApplication' : serviceNamespace.onlineApplication,
+                'getFeedback' : serviceNamespace.getFeedback,
+                'desvinculoHikConnect' : serviceNamespace.desvinculoHikConnect,
+                'passwordReset' : serviceNamespace.passwordReset,
+                'getCertificationInfo' : serviceNamespace.getCertificationInfo,
+                'getCertificationImg' : serviceNamespace.getCertificationImg,
+                'certificationEmail' : serviceNamespace.certificationEmail
+            };
+        });
+    }
+
+})();

@@ -1,0 +1,41 @@
+<svg width="2000" height="1300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g id="Spicchi_sotto_e_lato">
+   <g id="svg_1">
+    <defs transform="translate(0,-1) translate(-34,5) translate(182,62) translate(-96,-64) ">
+     <rect height="1300" width="2000" id="SVGID_1_"/>
+    </defs>
+    <clipPath transform="translate(0,-1) translate(-34,5) translate(182,62) translate(-96,-64) " id="SVGID_2_">
+     <use x="52" y="2" id="svg_2" xlink:href="#SVGID_1_"/>
+    </clipPath>
+    <path id="svg_3" d="m1999.425,4c-151.814,660.834 -741.918,1153.57 -1446.9,1153.57c-175.683,0 -344.525,-30.625 -500.525,-86.8l0,233.23l2000,0l0,-1300l-52.575,0z" fill="#3897ea" clip-path="url(#SVGID_2_)"/>
+    <path id="svg_4" d="m578.042,-3721.397c-1367.291,0 -2475.695,1111.698 -2475.695,2483.049c0,1371.359 1108.404,2483.056 2475.695,2483.056s2475.695,-1111.697 2475.695,-2483.057c0,-1371.351 -1108.404,-2483.048 -2475.695,-2483.048zm-25.642,4876.967c-820.1,0 -1484.921,-666.796 -1484.921,-1489.335c0,-822.536 664.821,-1489.334 1484.921,-1489.334s1484.92,666.798 1484.92,1489.334c0,822.539 -664.819,1489.335 -1484.92,1489.335z" fill="#7ae4e8" clip-path="url(#SVGID_2_)"/>
+    <path id="svg_5" d="m564.792,-2251.148c-950.197,0 -1720.482,772.577 -1720.482,1725.593c0,953.025 770.285,1725.599 1720.482,1725.599c950.199,0 1720.481,-772.573 1720.481,-1725.599c0,-953.016 -770.282,-1725.593 -1720.481,-1725.593zm-14.244,3404.861c-820.1,0 -1484.921,-666.796 -1484.921,-1489.335c0,-822.535 664.821,-1489.334 1484.921,-1489.334c820.101,0 1484.919,666.799 1484.919,1489.334c0.001,822.539 -664.818,1489.335 -1484.919,1489.335z" fill="#F3F3F3" clip-path="url(#SVGID_2_)"/>
+   </g>
+  </g>
+  <g id="luna">
+   <g id="svg_6">
+    <defs>
+     <rect height="1000" width="2000" y="420" x="3471" id="SVGID_3_"/>
+    </defs>
+    <clipPath id="SVGID_4_">
+     <use id="svg_7" xlink:href="#SVGID_3_"/>
+    </clipPath>
+    <path id="svg_8" d="m9654.333,5859c0,-2750.939 -2064.874,-4981 -4612.037,-4981c-2547.157,0 -4612.037,2230.061 -4612.037,4981s2064.88,4981 4612.037,4981c2547.163,0 4612.037,-2230.062 4612.037,-4981z" fill="#CCCCCC" clip-path="url(#SVGID_4_)"/>
+   </g>
+  </g>
+  <g id="Orizzontale_dark"/>
+  <g id="Quadrato1"/>
+  <g id="Quadrato2"/>
+  <g id="Quadrato3"/>
+  <g id="Quadrato4"/>
+  <g id="Mobile"/>
+  <g id="Tablet"/>
+  <g id="Orizzontale_light"/>
+ </g>
+</svg>

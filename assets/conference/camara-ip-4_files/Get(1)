@@ -1,0 +1,30 @@
+(function(){
+
+    var serviceNamespace = abp.utils.createNamespace(abp, 'services.front.languageFrontEnd');
+
+    serviceNamespace.getLanguages = function(input, ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/languageFrontEnd/GetLanguages',
+            type: 'POST',
+            data: JSON.stringify(input)
+        }, ajaxParams));
+    };
+
+    serviceNamespace.getCurrentLanguage = function(ajaxParams) {
+        return abp.ajax($.extend({
+            url: abp.appPath + 'api/services/front/languageFrontEnd/GetCurrentLanguage',
+            type: 'POST',
+            data: JSON.stringify({})
+        }, ajaxParams));
+    };
+
+    if(typeof define === 'function' && define.amd){
+        define(function (require, exports, module) {
+            return {
+                'getLanguages' : serviceNamespace.getLanguages,
+                'getCurrentLanguage' : serviceNamespace.getCurrentLanguage
+            };
+        });
+    }
+
+})();

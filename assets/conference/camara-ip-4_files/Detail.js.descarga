@@ -1,0 +1,308 @@
+﻿
+(function () {
+
+    KeyUpEvent();
+
+    var submit = function () {
+
+        if (!checkVaild()) return;
+        var input = getInputInfo();
+        input.menuId = 14951029615232;
+        $("#loadImg").css({"display":"inline-block"});
+        abp.services.front.feedbackFrontEnd.onlineInquiry(input, { //override jQuery's ajax parameters
+            async: true,
+            timeout: 30000
+        }).done(function (data) {
+            $("#loadImg").hide();
+            $('#ImgCode').attr('src', '/Handler/VerificationCode.ashx?' + Math.random());
+            if (data == "error") {
+                $("#Verification input").focus();
+                $("#Verification input").select();
+                $("#Verification label").text(commonData.codeError).show();
+            }
+            else if (data == "false") {
+                alert(commonData.submitError);
+            }
+            else if (data == "true") {
+                alert(commonData.submitSuccess);
+                window.location = window.location.href;
+            }
+            //document.location.reload(true);
+        });
+    }
+
+    $("#signupForm .submit").on('click', function () {
+        submit();
+    })
+
+    ImgClick();
+
+    function ImgClick() {
+        $("#ImgCode").on("click", function () {
+            $('#ImgCode').attr('src', '/Handler/VerificationCode.ashx?' + Math.random());
+
+        })
+        abp.services.front.contactFrontEnd.getContactenAll(
+                "14951029758085", { //override jQuery's ajax parameters
+                    async: false,
+                    timeout: 30000
+                }).done(function (data) {
+                    var str = "";
+                    str = "<select>";
+                    str += "<option>" + commonData.country+"</option>";
+                    for (var i in data) {
+                        str += "<option>" + data[i].title+"</option>";
+                    }
+                    str += "</select>";
+                    $("#Region").html(str);
+                })
+    }
+
+
+    function getInputInfo() {
+        var Receive = false;
+        if ($("#check22").prop("checked")) {
+            Receive = true;
+        } else {
+            Receive = false;
+        }
+        var input = {};
+        input.source = commonData.kind;
+        input.company = $("#companyName input").val();
+        input.firstName = $("#FirstName input").val();
+        input.lastName = $("#LastName input").val();
+        input.jobtitle = $("#JobTitle input").val();
+        input.fax = $("#Fax input").val();
+        input.phone = $("#Phone input").val();
+        input.webPage = $("#WebPage input").val();
+        input.email = $("#Email input").val();
+        input.province = $("#StatesProvice input").val();
+        input.address = $("#AddressLine1 input").val();
+        input.address1 = $("#AddressLine2 input").val();
+        input.city = $("#City input").val();
+        input.zipCode = $("#ZipCode input").val();
+        input.country = $("#Region").find("option:selected").text();
+        input.productNumber = $("#seriesNumber input").val();
+        input.description = $("#EnquiryDes textarea").val();
+        input.valiCode = $("#Verification input").val();
+        input.acceptSubscription = Receive;
+        return input;
+    }
+
+
+    function checkVaild() {
+
+        if (!$("#companyName input").val()) {
+            //document.getElementById("companyName").focus();
+            //document.getElementById("companyName").select();
+            $("#companyName input").focus();
+            $("#companyName input").select();
+            $("#companyName label").show();
+            return false;
+        }
+
+        if (!$("#FirstName input").val()) {
+            $("#FirstName input").focus();
+            $("#FirstName input").select();
+            $("#FirstName label").show();
+            return false;
+        }
+
+        if (!$("#LastName input").val()) {
+            $("#LastName input").focus();
+            $("#LastName input").select();
+            $("#LastName label").show();
+            return false;
+        }
+
+        if (!$("#JobTitle input").val()) {
+            $("#JobTitle input").focus();
+            $("#JobTitle input").select();
+            $("#JobTitle label").show();
+            return false;
+        }
+
+        if (!$("#Phone input").val()) {
+            $("#Phone input").focus();
+            $("#Phone input").select();
+            $("#Phone label").show();
+            return false;
+        }
+
+        if (!(/\w@\w*\.\w/.test($("#Email input").val()))) {
+            $("#Email input").focus();
+            $("#Email input").select();
+            $("#Email label").show();
+            return false;
+        }
+
+        if (!$("#seriesNumber input").val()) {
+            $("#seriesNumber input").focus();
+            $("#seriesNumber input").select();
+            $("#seriesNumber label").show();
+            return false;
+        }
+
+
+
+
+        if (!$("#EnquiryDes textarea").val()) {
+            $("#EnquiryDes textarea").focus();
+            $("#EnquiryDes textarea").select();
+            $("#EnquiryDes label").show();
+            return false;
+        }
+
+        var countrySelect = $("#Region").find("option:selected").text();
+        if (countrySelect == "Select Region / Country") {
+            $("#Region label").show();
+            $("#Region").focus();
+            return false;
+        }
+        if ($("#check1").prop("checked")) {
+        } else {
+            $("#check1s").show();
+            return false;
+        }
+
+        if (!$("#Verification input").val()) {
+            $("#Verification input").focus();
+            $("#Verification input").select();
+            $("#Verification label").show();
+            return false;
+        }
+
+        return true;
+
+    }
+
+
+    function KeyUpEvent() {
+        $("#EnquiryDes textarea").change(function () {
+            $(".t_h i").html($("#EnquiryDes textarea").val().length)
+        })
+        $("#EnquiryDes textarea").keydown(function () {
+            $(".t_h i").html($("#EnquiryDes textarea").val().length)
+        })
+        $("#EnquiryDes textarea").keyup(function () {
+            $(".t_h i").html($("#EnquiryDes textarea").val().length)
+        })
+        $("#companyName input").on("keyup", function () {
+            if ($("#companyName input").val() == "") {
+                $("#companyName label").show();
+            }
+            else {
+                $("#companyName label").hide();
+            }
+        })
+
+        $("#FirstName input").on("keyup", function () {
+            if ($("#FirstName input").val() == "") {
+                $("#FirstName label").show();
+            }
+            else {
+                $("#FirstName label").hide();
+            }
+        })
+
+        $("#LastName input").on("keyup", function () {
+            if ($("#LastName input").val() == "") {
+                $("#LastName label").show();
+            }
+            else {
+                $("#LastName label").hide();
+            }
+        })
+
+        $("#JobTitle input").on("keyup", function () {
+            if ($("#JobTitle input").val() == "") {
+                $("#JobTitle label").show();
+            }
+            else {
+                $("#JobTitle label").hide();
+            }
+        })
+
+
+        $("#Phone input").on("keyup", function () {
+            if ($("#Phone input").val() == "") {
+                $("#Phone label").show();
+            }
+            else {
+                $("#Phone label").hide();
+            }
+        })
+
+        $("#Email input").on("keyup", function () {
+            if (!(/\w@\w*\.\w/.test($("#Email input").val()))) {
+                $("#Email label").show();
+            }
+            else {
+                $("#Email label").hide();
+            }
+        })
+
+        $("#seriesNumber input").on("keyup", function () {
+            if ($("#seriesNumber input").val() == "") {
+                $("#seriesNumber label").show();
+            }
+            else {
+                $("#seriesNumber label").hide();
+            }
+        })
+
+
+        $("#Verification input").on("keyup", function () {
+            if ($("#Verification input").val() == "") {
+                $("#Verification label").show();
+            }
+            else {
+                $("#Verification label").hide();
+            }
+        })
+
+
+        $("#EnquiryDes textarea").on("keyup", function () {
+            textareInfo();
+        })
+        $("#Region select").on("change", function () {
+            Selection();
+        })
+        $("#check1").change(function () {
+            if ($("#check1").prop("checked")) {
+                $("#check1s").hide();
+
+            }
+            else { $("#check1s").show(); }
+        });
+        $("input[name=check1]").mousedown(function () {
+            if ($("input[name=check1]").val() == "") {
+                $("#check1s").show();
+                return false;
+            }
+            else { $("#check1s").hide(); }
+        });
+    }
+
+
+    function textareInfo() {
+        if ($("#EnquiryDes textarea").val() == "") {
+            isVaild = false;
+            $("#EnquiryDes label").show();
+        }
+        else {
+            $("#EnquiryDes label").hide();
+        }
+    }
+
+    function Selection() {
+        if ($("#Region").find("option:selected").text() == commonData.country) {
+            isVaild = false;
+            $("#Region label").show();
+        }
+        else {
+            $("#Region label").hide();
+        }
+    }
+
+})()
